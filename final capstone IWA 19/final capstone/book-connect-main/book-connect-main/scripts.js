@@ -16,6 +16,8 @@ const night = {
     light: '10, 10, 20',
 }
 
+
+
 //Buttons
 const searchbutton = document.querySelector("[data-header-search]");
 searchbutton.addEventListener('click', (event) => {
@@ -26,6 +28,8 @@ searchCancel.addEventListener('click', (event) => {
  document.querySelector("[data-search-overlay]").style.display = "none";
 })
 
+
+
 //Setting
 const settingButton = document.querySelector("[data-header-settings]")
 settingButton.addEventListener('click', (event) => {
@@ -35,7 +39,6 @@ const settingCancel = document.querySelector('[data-settings-cancel]')
 settingCancel.addEventListener('click', (event) => {
 document.querySelector("[data-settings-overlay]").style.display = "none";
 })
-
 
 
 
@@ -55,6 +58,8 @@ saveButton.addEventListener('click', (event) =>{
     document.querySelector("[data-settings-overlay]").style.display = "none";
       }
 } )
+
+
 
 //Search function to store more options to chose in genres and authors selects
 const authorFragment = document.createDocumentFragment();
@@ -85,6 +90,8 @@ for (let [id, name] of Object.entries(genres)) {
   genresFragment.appendChild(element);
 }
 document.querySelector('[data-search-genres]').appendChild(genresFragment);
+
+
 
 // Search specific books using options
 const searchFilter = document.querySelector('[data-search-form]')
@@ -139,6 +146,7 @@ const fragment2 = document.createDocumentFragment()
         preview.dataset.image = image
         preview.dataset.subtitle = `${authors[author]} (${(new Date(published)).getFullYear()})`
         preview.dataset.description = description
+
         // preview.dataset.genre = genres
         preview.innerHTML= /*html*/`
         <div>
@@ -161,14 +169,14 @@ const fragment2 = document.createDocumentFragment()
 const fragment = document.createDocumentFragment()
 const extracted = books.slice(0, 36)
 
-//made this a global variable because used in many functions
+
 /**
  * This is the button used to add more books to the page as you scroll
  * down.
  */
 const SHOW_MORE_BTN = document.querySelector('[data-list-button]');
-//make the text on button more transparent
 SHOW_MORE_BTN.setAttribute("style", "color: rgba(255, 255, 255, 0.6)");
+
 
 
 /**
@@ -178,42 +186,28 @@ SHOW_MORE_BTN.setAttribute("style", "color: rgba(255, 255, 255, 0.6)");
  * loaded to the page
  */
 const updateBooksLeft = () => {
-    /* fetch the books that are already on the page then count them and
-use the number of books left in the books object to add more books so the button
-can stop adding more books when all the books in the object have been added*/
 const booksOnPage = document.querySelectorAll('preview');
 const booksOnPageCount = booksOnPage.length;
-//subtract books on page from total books in object
 const booksLeft = books.length - booksOnPageCount;
 //add the text to the button element
 return booksLeft
    }
 
-// create a function to show the books on the page
+
 /**
  * This function loads the home page of the website with 
  * the books shown in a list of 36 at a time.
  * @param {imported object} books 
  */
 const appendBooks = (books) => {
-
     /* use imported variable that stored the number of books that
     can be on the page at a time in a for loop to loop through the books
     and add only 36 at time*/
     for (let i = 0; i < BOOKS_PER_PAGE; i++) {
-        //get the books from index 0 in the books object
         const book = books[i];
-
-        /*create a button element for the books so each book is 
-        in its own card*/
         const button = document.createElement('button');
-
-          //create a class and call it preview
-          button.classList.add('preview');
-
-               // Set the button's data-preview attribute to the book's id.
-           button.dataset.preview = book.id;
-
+        button.classList.add('preview');
+        button.dataset.preview = book.id;
       // Set the button's inner HTML to the book's title and author.
       button.innerHTML =/* HTML markup for the book cards */
       `
@@ -234,6 +228,8 @@ const appendBooks = (books) => {
 SHOW_MORE_BTN.innerHTML = `Show more (${updateBooksLeft()})`
     }
 
+
+
     /**
      * This function will add more books to the page and update
      * the number in the show more button everytime it is clicked 
@@ -241,20 +237,13 @@ SHOW_MORE_BTN.innerHTML = `Show more (${updateBooksLeft()})`
      */
 const showMoreAction = (event) => {
     event.preventDefault()
-        /* fetch the books that are already on the page then count them and
-    use the number of books left in the books object to add more books so the button
-    can stop adding more books when all the books in the object have been added*/
     const booksOnPage = document.querySelectorAll('.preview');
     const booksOnPageCount = booksOnPage.length;
     //subtract books on page from total books in object
     const booksLeft = books.length - booksOnPageCount;
-    //add the text to the button element
     
     //check if there are still books left in the books object
     if(booksLeft > 0) {
-        /*add 36 more books to the page using the appendBooks function
-        where the books object is altered by slicing out books
-        from where the first function call ended to 36 more books*/
         appendBooks(books.slice(booksOnPageCount, booksOnPageCount + 36))
     }   
         SHOW_MORE_BTN.innerHTML = `Show more (${booksLeft})`
@@ -337,12 +326,6 @@ const bookclickInSearch = document.querySelector('[data-list-message]')
 bookclickInSearch.addEventListener('click', detailsToggle)
 
 
-
-
-
-
-
-//ACTION CALLS
 
 /** 
  * calling the function to load page with book list using an event
